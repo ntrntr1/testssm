@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action = "<%=request.getContextPath()%>/user/showAllUser" method="post">
+<form action = "<%=request.getContextPath()%>/user/showAllUser.do" method="post">
     <table>
         <tr>
             <td>用户名:</td>

@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("user")
@@ -17,7 +19,6 @@ public class UserController {
     IUserService iUserService;
     @RequestMapping("showAllUser")
     public String showAllUser(Model model) {
-        ModelAndView mav = new ModelAndView();
         List<User> allUser = iUserService.getAllUser();
         for (User u: allUser) {
             System.out.println(u.getPsword());
