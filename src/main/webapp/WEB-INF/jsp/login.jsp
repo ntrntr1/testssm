@@ -204,7 +204,8 @@
 </form>
 
 <button onclick="dataDisplay()"> 显示所有数据</button></td>
-<div id="dataDisplay"></div>
+<div id="dataDisplay">123</div>
+
 
 <script type="text/javascript">
 
