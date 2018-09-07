@@ -26,7 +26,6 @@ public class UserController {
     private Logger logger = Logger.getLogger("UserController");
     @Autowired
     IUserService iUserService;
-
     @RequestMapping("showAllUser")
     public String showAllUser(Model model) {
         List<User> allUser = iUserService.getAllUser();
