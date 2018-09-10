@@ -9,8 +9,5 @@
         <module name="testssm" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="testssm" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

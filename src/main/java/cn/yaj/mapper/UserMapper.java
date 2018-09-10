@@ -5,7 +5,7 @@ import cn.yaj.pojo.UserExample;
 import java.util.List;
 
 public interface UserMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(User record);
 
@@ -13,7 +13,9 @@ public interface UserMapper {
 
     List<User> selectByExample(UserExample example);
 
-    User selectByPrimaryKey(String id);
+    User selectByPrimaryKey(Integer id);
+
+    User selectByUserName(String username);
 
     int updateByPrimaryKeySelective(User record);
 

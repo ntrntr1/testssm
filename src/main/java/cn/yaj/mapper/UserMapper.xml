@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.yaj.mapper.UserMapper" >
   <resultMap id="BaseResultMap" type="cn.yaj.pojo.User" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="psword" property="psword" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
@@ -54,20 +54,29 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from user_
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user_
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user_
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.yaj.pojo.User" >
-    insert into user_ (id, username, psword, 
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into user_ (username, psword,
       createtime)
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{psword,jdbcType=VARCHAR}, 
+    values (#{username,jdbcType=VARCHAR}, #{psword,jdbcType=VARCHAR},
       #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.yaj.pojo.User" >
@@ -88,7 +97,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
@@ -114,13 +123,13 @@
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.yaj.pojo.User" >
     update user_
     set username = #{username,jdbcType=VARCHAR},
       psword = #{psword,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
