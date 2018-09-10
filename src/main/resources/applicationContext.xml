@@ -16,7 +16,7 @@
 	
 
    <context:annotation-config />
-	<context:component-scan base-package="cn.yaj.service" />  <!--modify by yaj-->
+	<context:component-scan base-package="cn.yaj" />  <!--modify by yaj，去掉了service-->
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
 	  <property name="driverClassName">  
@@ -38,7 +38,7 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="typeAliasesPackage" value="cn.yaj.pojo" />   <!--modify by yaj-->
 		<property name="dataSource" ref="dataSource"/>
-		<property name="mapperLocations" value="classpath:cn/yaj/pojo/*.xml"/>  <!--modify by yaj-->
+		<property name="mapperLocations" value="classpath:cn/yaj/mapper/*.xml"/>  <!--modify by yaj-->
 		<property name="plugins">
 		    <array>
 		      <bean class="com.github.pagehelper.PageInterceptor">

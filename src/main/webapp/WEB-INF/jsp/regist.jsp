@@ -27,7 +27,7 @@
 
 
 <body>
-<form name = "form1" action="login.php" onsubmit="return check_submit()">
+<form name = "form1" action="userRegist.do" onsubmit="return check_submit()">
     <table  border="0" cellspacing="0" cellpadding="5" bordercolor="#ccc">
         <tr>
             <td width="200" align="right">请输入用户名：</td>
@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <td width="200" align="right">请输入密码：</td>
-            <td width="200"><input type="password" name="userpwd" onblur="blur_userpwd()" onfocus="focus_userpwd()"></td>
+            <td width="200"><input type="password" name="psword"/></td>
             <td><div id="result_pwd"></div></td>
         </tr>
         <tr>
@@ -44,8 +44,8 @@
                 　　　　　　　　<canvas id="verifyCanvas" width="200" height="50" style="cursor: pointer;margin-top:-30px;margin-bottom: 10px;"></canvas>
                 　　　　　　</div></td>
             <td>
-                <input style="" type="text" id="code_input"  name="verfycode" value="" placeholder="请输入验证码"/ onblur="blur_verify()">
-            <td width="300"><div id="result_verify"></td>
+                <input style="" type="text" id="code_input"  name="verfycode" value="" placeholder="请输入验证码" onblur="blur_verify()" />
+            <td width="300"><div id="result_verify"/></td>
             </td>
 
 
@@ -105,7 +105,7 @@
                     }
                     else
                     {
-                        $.ajax({url:"1.txt",
+                        $.ajax({url:"checkIsUser.do",
                             async:false,
                             type:'post',
                             dataType:'json',
@@ -155,7 +155,7 @@
 
 
 
-<script src="<%=basePath %>js/验证码实现.js"></script>
+<script src="<%=basePath %>js/checkVerifyCode.js"></script>
 <script>
     var verifyCode = new GVerify("v_container");
     //函数，判断验证码是否正确
@@ -214,7 +214,7 @@
     function dataDisplay(){
         var str,i,x="";
         $.ajax({
-            url:"/user/showAllUser.do",
+            url:"showAllUser.do",
             type:'post',
 
             success:function(obj){

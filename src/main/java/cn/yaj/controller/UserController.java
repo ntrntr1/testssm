@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpServletRequest;
@@ -26,39 +27,48 @@ public class UserController {
     private Logger logger = Logger.getLogger("UserController");
     @Autowired
     IUserService iUserService;
+    @RequestMapping("login")
+    public String login(){
+        return "regist";
+    }
     @RequestMapping("showAllUser")
-    public String showAllUser(Model model) {
+    @ResponseBody
+    public void showAllUser(Model model, HttpServletResponse response) {
         List<User> allUser = iUserService.getAllUser();
         for (User u : allUser) {
             System.out.println(u.getPsword());
         }
-        model.addAttribute("allUser", allUser);
-        return "showuser";
+        JSONObject json = JSONObject.fromObject(allUser);
+        try {
+            response.getWriter().println(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping(value = "/userRegist", method = RequestMethod.GET)
     public String userRegist(User user) {
         User checkUser = iUserService.getUserbykey(user.getUsername());
-        if (null != checkUser) {
+        if (null == checkUser) {
             int id = iUserService.insert(user);
-            logger.warning("返回的id为" + id);
-            if (id > 0) {
+            logger.warning("返回的id为" + user.getId());
+            if (user.getId() > 0) {
                 return "login";
             } else {
                 return "regist";
             }
         }
-        return "login";
+        return "regist";
     }
 
-    @RequestMapping("/userLogin")
+    @RequestMapping("userLogin")
     public String userLogin(Model model, User user) {
         User checkUser = iUserService.getUserbykey(user.getUsername());
         String msg;
         if (null == checkUser) {
             msg = "用户不存在请先注册！！！";
             model.addAttribute("msg", msg);
-            return "login";
+            return "regist";
         }
         String password = checkUser.getPsword();
         if (MD5.md5Password(user.getPsword()).equals(password)) {
@@ -69,7 +79,7 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping("/checkIsUser")
+    @RequestMapping(value = "/checkIsUser",produces = "text/plain;charset=utf-8")
     public void checkIsUser(User user, HttpServletResponse response) {
         System.out.print(user.getUsername());
         User checkUser = iUserService.getUserbykey(user.getUsername());
@@ -86,7 +96,7 @@ public class UserController {
         }
         JSONObject json = JSONObject.fromObject(map);
         try {
-            response.getWriter().print(json);
+            response.getWriter().println(json);
         } catch (IOException e) {
             e.printStackTrace();
         }
